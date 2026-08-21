@@ -45,3 +45,6 @@ const PORT = 2238;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+
+export default app;
