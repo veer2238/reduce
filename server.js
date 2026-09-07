@@ -3,7 +3,6 @@ import multer from "multer";
 import sharp from "sharp";
 import cors from "cors";
 import nodemailer from 'nodemailer';
-import cron from "node-cron";
 import dotenv from "dotenv";
 
 
