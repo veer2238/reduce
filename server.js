@@ -2,7 +2,12 @@ import express from "express";
 import multer from "multer";
 import sharp from "sharp";
 import cors from "cors";
+import nodemailer from 'nodemailer';
 import cron from "node-cron";
+import dotenv from "dotenv";
+
+
+dotenv.config();
 
 const app = express();
 
@@ -47,23 +52,40 @@ app.post("/api/compress", upload.single("image"), async (req, res) => {
 
 app.get("/api/birthday/send", async (req, res) => {
   try {
-    console.log("Birthday cron started");
+    console.log("Birthday API called");
 
-    // 1. Get today's date
-    // 2. Find students whose birthday is today
-    // 3. Send email
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_CC,
+      subject: "Birthday Test",
+      html: "<h1>hi</h1>",
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log("Email sent:", info.response);
 
     res.status(200).json({
       success: true,
-      message: "Birthday check completed"
+      message: "Email sent successfully",
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("Email error:", error);
 
     res.status(500).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 });
