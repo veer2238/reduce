@@ -54,18 +54,18 @@ app.get("/api/birthday/send", async (req, res) => {
     console.log("Birthday API called");
 
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
+      host: 'smtp.hostinger.com',
+      port: 465,
       secure: true,
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: 'info@v-extechsolution.in',
+        pass: 'Hima@0409',
       },
     });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_CC,
+      from: 'info@v-extechsolution.in',
+      to: 'veer2238rajput@gmail.com',
       subject: "Birthday Test",
       html: "<h1>hi</h1>",
     };
